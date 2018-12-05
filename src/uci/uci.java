@@ -25,9 +25,21 @@ public class uci {
             {
                 inputUCINewGame();
             }
+            else if (inputString.startsWith("position"))
+            {
+                inputPosition(inputString);
+            }
+            else if (inputString.startsWith("go"))
+            {
+                inputGo();
+            }
             else if (inputString.equals("quit"))
             {
                 inputQuit();
+            }
+            else if ("print".equals(inputString))
+            {
+                inputPrint();
             }
         }
     }
@@ -56,6 +68,10 @@ public class uci {
         System.exit(0);
     }
 
+    private static void inputPosition(String inputString){}
 
+    private static void inputGo(){}
+
+    private static void inputPrint(){}
 
 }
