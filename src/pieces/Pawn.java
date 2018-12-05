@@ -32,7 +32,7 @@ public class Pawn extends Pieces {
 			return false;
 		} else {
 			// Le pion est noir il incremente sa position
-			if (this.getOwner() == true) {
+			if (this.getOwner()) {
 				if (this.isInitialPosition() && destPosY - this.getPosY() == 0) {
 					if (destPosX - this.getPosX() > 2 || destPosX - this.getPosX() <= 0) {
 						return false;
@@ -71,7 +71,7 @@ public class Pawn extends Pieces {
 			}
 			// Le pion est blanc il decremente sa position
 			else {
-				if (this.getOwner() == false) {
+				if (this.getOwner()) {
 					if (this.isInitialPosition() && destPosY - this.getPosY() == 0) {
 						if (this.getPosX() - destPosX > 2 || this.getPosX() - destPosX <= 0) {
 							return false;
@@ -117,7 +117,7 @@ public class Pawn extends Pieces {
 	public List<int[]> possibleMoves(Case[][] chessBoard) {
 		List<int[]> possiblemoves = new ArrayList<int[]>();
 		int dirX;
-		if (this.getOwner() == false) {
+		if (!this.getOwner()) {
 			dirX = -1;
 		} else {
 			dirX = 1;
