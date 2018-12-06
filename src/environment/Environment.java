@@ -13,7 +13,7 @@ public class Environment implements Runnable {
 	
 	Case[][] chessBoard;
 	int mesureDePerformance;
-	// permet de savoir si le jeu est terminé ou est encore en cours
+	// permet de savoir si le jeu est terminï¿½ ou est encore en cours
 	boolean environmentRunning;
 	
 	

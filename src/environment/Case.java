@@ -51,4 +51,9 @@ public class Case {
 		this.actualPieces.setPosY(this.getPositionY());
 	}
 
+	public void movePieceTo(Case dest) {
+		dest.setActualPieces(this.getActualPieces());
+		this.actualPieces = null;
+	}
+
 }
