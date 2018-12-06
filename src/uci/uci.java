@@ -27,7 +27,7 @@ public class uci {
             }
             else if (inputString.startsWith("position"))
             {
-                inputPosition(inputString);
+                inputPosition(2,1,3,1);
             }
             else if (inputString.startsWith("go"))
             {
@@ -68,7 +68,23 @@ public class uci {
         System.exit(0);
     }
 
-    private static void inputPosition(String inputString){}
+    private static void inputPosition(int positionDepX, int positionDepY, int positionX, int positionY){
+        System.out.println("bestmove " + transformPosCol(positionDepY) + positionDepX + transformPosCol(positionY) + positionX);
+    }
+
+    private static String transformPosCol(int positionCol){
+        switch(positionCol){
+            case 1: return "a";
+            case 2: return "b";
+            case 3: return "c";
+            case 4: return "d";
+            case 5: return "e";
+            case 6: return "f";
+            case 7: return "g";
+            case 8: return "h";
+        }
+        return "";
+    }
 
     private static void inputGo(){}
 
