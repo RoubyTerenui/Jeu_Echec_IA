@@ -27,11 +27,11 @@ public class uci {
             }
             else if (inputString.startsWith("position"))
             {
-                inputPosition(2,1,3,1);
+                inputPosition(inputString);
             }
             else if (inputString.startsWith("go"))
             {
-                inputGo();
+                inputGo(2,1,3,1);
             }
             else if (inputString.equals("quit"))
             {
@@ -68,11 +68,19 @@ public class uci {
         System.exit(0);
     }
 
-    private static void inputPosition(int positionDepX, int positionDepY, int positionX, int positionY){
-        System.out.println("bestmove " + transformPosCol(positionDepY) + positionDepX + transformPosCol(positionY) + positionX);
+    private static int[] inputPosition(String inputString){
+        String input = "";
+        int size = inputString.length();
+        if(inputString.contains("startpos ")){
+            if(inputString.contains("moves ")){
+                input = inputString.substring(size - 2, size);
+            }
+        }
+        int[] result = {transformColToPos(input.charAt(0)),(int)input.charAt(1)};
+        return result;
     }
 
-    private static String transformPosCol(int positionCol){
+    private static String transformPosToCol(int positionCol){
         switch(positionCol){
             case 1: return "a";
             case 2: return "b";
@@ -86,7 +94,23 @@ public class uci {
         return "";
     }
 
-    private static void inputGo(){}
+    private static int transformColToPos(char positionCol){
+        switch(positionCol){
+            case 'a': return 1;
+            case 'b': return 2;
+            case 'c': return 3;
+            case 'd': return 4;
+            case 'e': return 5;
+            case 'f': return 6;
+            case 'g': return 7;
+            case 'h': return 8;
+        }
+        return 0;
+    }
+
+    private static void inputGo(int positionDepX, int positionDepY, int positionX, int positionY){
+        System.out.println("bestmove " + transformPosToCol(positionDepY) + positionDepX + transformPosToCol(positionY) + positionX);
+    }
 
     private static void inputPrint(){}
 
