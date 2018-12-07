@@ -57,4 +57,5 @@ public abstract class Pieces {
 	// Method that return all the possible moves by the selected Piece
 	public abstract List<int[]> possibleMoves(Case[][] chessBoard);
 
+	public abstract Pieces clone();
 }

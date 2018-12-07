@@ -21,6 +21,14 @@ public class Case {
 		this.actualPieces = actualPieces;
 	}
 
+	public Case(Case c)
+	{
+		super();
+		this.positionX = c.positionX;
+		this.positionY = c.positionY;
+		this.actualPieces = (c.actualPieces != null) ? c.actualPieces.clone() : null;
+	}
+
 	// --- GETTERS ---
 	public int getPositionY() {
 		return positionY;

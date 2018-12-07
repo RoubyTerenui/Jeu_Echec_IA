@@ -42,4 +42,8 @@ public class Queen extends Pieces {
 		return possiblemoves;
 	}
 
+	public Pieces clone() {
+		return new Queen(this.getPosX(), this.getPosY(), this.getOwner());
+	}
+
 }

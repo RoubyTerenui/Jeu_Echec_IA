@@ -80,4 +80,7 @@ public class Bishop extends Pieces {
 		return possiblemoves;
 	}
 
+	public Pieces clone() {
+		return new Bishop(this.getPosX(), this.getPosY(), this.getOwner());
+	}
 }

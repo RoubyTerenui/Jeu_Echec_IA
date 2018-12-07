@@ -20,13 +20,13 @@ public class Agent {
         this.belief = board;
     }
 
-    private List<Pieces> getPiecesForOwner(boolean owner) {
+    private List<Pieces> getPiecesForOwner(Case[][] board, boolean owner) {
         List<Pieces> pieces = new ArrayList<Pieces>();
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (this.belief[i][j].getActualPieces() != null && this.belief[i][j].getActualPieces().getOwner() == owner) {
-                    pieces.add(this.belief[i][j].getActualPieces());
+                if (board[i][j].getActualPieces() != null && board[i][j].getActualPieces().getOwner() == owner) {
+                    pieces.add(board[i][j].getActualPieces());
                 }
             }
         }
@@ -37,9 +37,11 @@ public class Agent {
     private List<Move> getPossibleMoves(Case[][] board, Boolean player) {
         List<Move> moves = new ArrayList<Move>();
 
-        for (Pieces piece : getPiecesForOwner(player))  {
+        for (Pieces piece : getPiecesForOwner(board, player))  {
             for (int[] dest : piece.possibleMoves(board)) {
-                moves.add(new Move(piece, dest));
+                Move m = new Move(piece,dest);
+                moves.add(m);
+                // System.out.println(m);
             }
         }
 
@@ -52,13 +54,15 @@ public class Agent {
     private int evaluateBoard(Case[][] board) {
         int boardScore = 0;
 
+        //System.out.println("score = 0");
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (this.belief[i][j].getActualPieces() != null)
-                    boardScore += (this.belief[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1) * this.belief[i][j].getActualPieces().getValue();
+                if (board[i][j].getActualPieces() != null){
+                    boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1) * board[i][j].getActualPieces().getValue();
+                }
             }
         }
-
         return boardScore;
     }
 
@@ -68,15 +72,51 @@ public class Agent {
     }
 
     public Move getBestMove() {
-        return getRandomMove();
+        int minimax_depth = 2;
+        Move bestMove = null;
+        int bestVal = Integer.MIN_VALUE;
+
+        for (Move move : getPossibleMoves(this.belief, this.aiOwner)) {
+            System.out.println(move);
+
+            int moveVal = minimaxAlphaBeta(fakeMove(this.belief, move), minimax_depth, aiOwner, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+            System.out.println("Value : " + moveVal);
+
+            if (moveVal > bestVal)
+            {
+                bestVal = moveVal;
+                bestMove = move;
+            }
+        }
+        return bestMove;
     }
 
     private Case[][] fakeMove(Case[][] board, Move m) {
-        Case[][] newBoard = board.clone();
+        Case[][] newBoard = new Case[8][8];
 
-        board[m.getPiece().getPosX()][m.getPiece().getPosY()].movePieceTo(board[m.getDest()[0]][m.getDest()[1]]);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                newBoard[i][j] = new Case(board[i][j]);
+            }
+        }
+
+        //debugBoard(board);
+        //System.out.println(m.getPiece());
+        //System.out.println(m.getPiece().getPosX() + "  " + m.getPiece().getPosY());
+
+        newBoard[m.getPiece().getPosX()][m.getPiece().getPosY()].movePieceTo(newBoard[m.getDest()[0]][m.getDest()[1]]);
 
         return newBoard;
+    }
+
+    private void debugBoard(Case[][] board) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(board[i][j].getActualPieces() + ",");
+            }
+            System.out.println();
+        }
     }
 
     private int minimaxAlphaBeta(Case[][] board, int depth, Boolean maxPlayer, int alpha, int beta) {
@@ -109,5 +149,5 @@ public class Agent {
         return bestValue;
     }
 
-    //TODO: endgame, value to move, timer
+    //TODO: endgame, timer
 }

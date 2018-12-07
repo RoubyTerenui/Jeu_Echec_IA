@@ -95,4 +95,8 @@ public class Rook extends Pieces {
 		return possiblemoves;
 	}
 
+	public Pieces clone() {
+		return new Rook(this.getPosX(), this.getPosY(), this.getOwner());
+	}
+
 }

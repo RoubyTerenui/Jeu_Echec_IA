@@ -45,5 +45,7 @@ public class King extends Pieces {
 		return possiblemoves;
 	}
 
-
+	public Pieces clone() {
+		return new King(this.getPosX(), this.getPosY(), this.getOwner());
+	}
 }

@@ -135,4 +135,8 @@ public class Pawn extends Pieces {
 		return possiblemoves;
 	}
 
+	public Pieces clone() {
+		return new Pawn(this.getPosX(), this.getPosY(), this.getOwner());
+	}
+
 }

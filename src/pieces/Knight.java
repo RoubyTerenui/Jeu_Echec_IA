@@ -55,4 +55,8 @@ public class Knight extends Pieces {
 		return possiblemoves;
 	}
 
+	public Pieces clone() {
+		return new Knight(this.getPosX(), this.getPosY(), this.getOwner());
+	}
+
 }
