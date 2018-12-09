@@ -15,7 +15,7 @@ public class Environment implements Runnable {
 	int mesureDePerformance;
 	// permet de savoir si le jeu est terminï¿½ ou est encore en cours
 	boolean environmentRunning;
-	
+	// TO DO historique des mouvements (egalité trois mouvements égaux)
 	
 	// --- CONSTRUCTOR ---
 

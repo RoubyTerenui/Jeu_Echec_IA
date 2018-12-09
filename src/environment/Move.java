@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Move {
 
     private Pieces piece;
-    private int[] dest;
+    private int[] dest;// TO DO mettre une case a la place d'une liste d'entier en destination
 
     public Move(Pieces p, int[] d) {
         this.piece = p;

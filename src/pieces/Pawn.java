@@ -8,6 +8,7 @@ import environment.Case;
 public class Pawn extends Pieces {
 	// --- FIELDS ---
 	private boolean initialPosition;
+	private boolean canBepassTaken;
 
 	// --- CONSTRUCTOR ---
 	public Pawn(int posX, int posY, Boolean owner) {
@@ -19,10 +20,16 @@ public class Pawn extends Pieces {
 	public boolean isInitialPosition() {
 		return initialPosition;
 	}
+	public boolean isCanBepassTaken() {
+		return canBepassTaken;
+	}
 
 	// --- SETTER ---
 	public void setInitialPosition(boolean initialPosition) {
 		this.initialPosition = initialPosition;
+	}
+	public void setCanBepassTaken(boolean canBepassTaken) {
+		this.canBepassTaken = canBepassTaken;
 	}
 
 	// --- METHODS TO IMPLEMENT PIECES ---
@@ -135,8 +142,36 @@ public class Pawn extends Pieces {
 		return possiblemoves;
 	}
 
+<<<<<<< Updated upstream
 	public Pieces clone() {
 		return new Pawn(this.getPosX(), this.getPosY(), this.getOwner());
 	}
 
+=======
+	// TO DO trouver un moyen de l'ajouter a la liste des mouvement possibles verifier son efficacité
+	public List<int[]> passTakenMove(Case[][] chessBoard){
+		List<int[]> possiblemoves = new ArrayList<int[]>();
+		Pieces adjacent=chessBoard[this.getPosX()][this.getPosY()-1].getActualPieces();
+		if(adjacent.getClass().equals(Pawn.class)) {
+			if(adjacent.getOwner()!=this.getOwner()) {
+				if(((Pawn)adjacent).isCanBepassTaken()) {
+					int[] newMove = { this.getPosX(), this.getPosY()-1 };
+					possiblemoves.add(newMove);
+				}
+			}
+		}
+		adjacent=chessBoard[this.getPosX()][this.getPosY()+1].getActualPieces();
+		if(adjacent.getClass().equals(Pawn.class)) {
+			if(adjacent.getOwner()!=this.getOwner()) {
+				if(((Pawn)adjacent).isCanBepassTaken()) {
+					int[] newMove = { this.getPosX(), this.getPosY()+1 };
+					possiblemoves.add(newMove);
+				}
+			}
+		}
+		
+		return possiblemoves;
+		
+	}
+>>>>>>> Stashed changes
 }

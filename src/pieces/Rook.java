@@ -7,11 +7,28 @@ import environment.Case;
 
 public class Rook extends Pieces {
 
+	// --- FIELD ---
+	private boolean unmoved;
+
+	// --- CONSTRUCTOR ---
 	public Rook(int posX, int posY, Boolean owner) {
 		super(posX, posY, owner, 5);
-
+		unmoved=true;
 	}
 
+	// --- GETTER ---
+	public Boolean getUnmoved() {
+		return unmoved;
+	}
+
+	
+	// --- SETTER ---
+	public void setUnmoved(Boolean unmoved) {
+		this.unmoved = unmoved;
+	}
+	
+
+	// ---OTHER METHOD ---
 	@Override
 	public Boolean isMoveLegal(int destPosX, int destPosY, Case[][] chessBoard) {
 		// Si en-dehors de l'echiquier illégal
@@ -94,6 +111,8 @@ public class Rook extends Pieces {
 		}
 		return possiblemoves;
 	}
+	
+
 
 	public Pieces clone() {
 		return new Rook(this.getPosX(), this.getPosY(), this.getOwner());

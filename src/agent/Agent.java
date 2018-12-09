@@ -33,7 +33,7 @@ public class Agent {
 
         return pieces;
     }
-
+    
     private List<Move> getPossibleMoves(Case[][] board, Boolean player) {
         List<Move> moves = new ArrayList<Move>();
 
