@@ -21,6 +21,14 @@ public class Case {
 		this.actualPieces = actualPieces;
 	}
 
+	public Case(Case c)
+	{
+		super();
+		this.positionX = c.positionX;
+		this.positionY = c.positionY;
+		this.actualPieces = (c.actualPieces != null) ? c.actualPieces.clone() : null;
+	}
+
 	// --- GETTERS ---
 	public int getPositionY() {
 		return positionY;
@@ -49,6 +57,11 @@ public class Case {
 		// On verifie que la piece est sur la bonne position
 		this.actualPieces.setPosX(this.getPositionX());
 		this.actualPieces.setPosY(this.getPositionY());
+	}
+
+	public void movePieceTo(Case dest) {
+		dest.setActualPieces(this.getActualPieces());
+		this.actualPieces = null;
 	}
 
 }

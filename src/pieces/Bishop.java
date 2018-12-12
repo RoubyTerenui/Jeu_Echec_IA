@@ -9,6 +9,17 @@ public class Bishop extends Pieces {
 
 	public Bishop(int posX, int posY, Boolean owner) {
 		super(posX, posY, owner, 3);
+		double[][] grid = { 
+				{ -2, -1, -1, -1, -1, -1, -1, -2 }, 
+				{ -1,  0,  0,  0,  0,  0,  0, -1 },
+				{ -1,  0,0.5, -1, -1, -1, -1, -1 }, 
+				{ -1, -1, -1, -1, -1, -1, -1, -1 },
+				{ -1, -1, -1, -1, -1, -1, -1, -1 }, 
+				{ -1, -1, -1, -1, -1, -1, -1, -1 },
+				{ -1, -1, -1, -1, -1, -1, -1, -1 }, 
+				{ -2, -1, -1, -1, -1, -1, -1, -2 } 
+				};
+		this.setGrid(grid);
 	}
 
 	@Override
@@ -57,6 +68,14 @@ public class Bishop extends Pieces {
 
 			}
 		}
+		// SI la case a destination possede une piece ennemie la met en danger
+		if (chessBoard[destPosX][destPosY].getActualPieces() != null) {
+			if (chessBoard[destPosX][destPosY].getActualPieces().getOwner() != this.getOwner()) {
+				if (chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
+					chessBoard[destPosX][destPosY].getActualPieces().setEndangeredPieces(true);
+				}
+			}
+		}
 		return true;
 	}
 
@@ -80,4 +99,7 @@ public class Bishop extends Pieces {
 		return possiblemoves;
 	}
 
+	public Pieces clone() {
+		return new Bishop(this.getPosX(), this.getPosY(), this.getOwner());
+	}
 }

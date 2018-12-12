@@ -9,6 +9,17 @@ public class Knight extends Pieces {
 
 	public Knight(int posX, int posY, Boolean owner) {
 		super(posX, posY, owner, 3);
+		double[][] grid = {
+				{-5.0, 	-4.0,	 -3.0,	-3.0,	-3.0,	 -3.0,	-4.0,	-5.0},
+				{-4.0, 	-2.0,	  0.0, 	 0.0,	 0.0,	  0.0,	-2.0,	-4.0},
+				{-3.8, 	 0.0,	  1.0,	 1.5,	 1.5,	  1.0,	 0.0,	-3.0},
+				{-3.0,	 0.5,	  1.5,	 2.0,	 2.0,	  1.5,	 0.5,	-3.0},
+				{-3.0, 	 0.0,	  1.5,	 2.0, 	 2.0,	  1.5,	 0.0,	-3.0},
+				{-3.0,	 0.5,	  1.0,	 1.5, 	 1.5,	  1.0,	 0.5,	-3.0},
+				{-4.0,	-2.0,	  0.0,	 0.5, 	 0.5,	  0.0,	-2.0,	-4.0},
+				{-5.0,	-4.0,	 -3.0,	-3.0,	-3.0,	 -3.0,	-4.0,	-5.0}
+		};
+		this.setGrid(grid);
 	}
 
 	@Override
@@ -29,7 +40,13 @@ public class Knight extends Pieces {
 				return false;
 			}
 		}
-
+		if (chessBoard[destPosX][destPosY].getActualPieces() != null) {
+			if (chessBoard[destPosX][destPosY].getActualPieces().getOwner() != this.getOwner()) {
+				if(chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
+					chessBoard[destPosX][destPosY].getActualPieces().setEndangeredPieces(true);
+				}
+			}
+		}
 		return true;
 	}
 
@@ -53,6 +70,10 @@ public class Knight extends Pieces {
 			dirX += 2;
 		}
 		return possiblemoves;
+	}
+
+	public Pieces clone() {
+		return new Knight(this.getPosX(), this.getPosY(), this.getOwner());
 	}
 
 }

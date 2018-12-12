@@ -1,5 +1,8 @@
 /bin/
-
 \.classpath
-
 \.project
+Chess IA.iml
+.idea
+out/
+
+src/tests/Bishop_Test\.java

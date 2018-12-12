@@ -9,7 +9,17 @@ public class Queen extends Pieces {
 
 	public Queen(int posX, int posY, Boolean owner) {
 		super(posX, posY, owner, 9);
-
+		double grid[][]= {
+						{-2.0,	-1.0,	-1.0,	-0.5,	-0.5,	-1.0,	-1.0,	-2.0},
+						{-1.0,	 0.0,	 0.0,	 0.0,	 0.0,	 0.0,	 0.0,	-1.0},
+						{-1.0,	 0.0,	 0.5,	 0.5,	 0.5,	 0.5,	 0.0,	-1.0},
+						{-0.5,	 0.0,	 0.5,	 0.5,	 0.5,	 0.5,	 0.0,	-0.5},
+						{ 0.0,	 0.0,	 0.5,	 0.5,	 0.5,	 0.5,	 0.0,	-0.5},
+						{-1.0,	 0.5,	 0.5,	 0.5,	 0.5,	 0.5,	 0.0,	-1.0},
+						{-1.0,	 0.0,	 0.5,	 0.0,	 0.0,	 0.0,	 0.0,	-1.0},
+						{-2.0,	-1.0,	-1.0,	-0.5,	-0.5,	-1.0,	-1.0,	-2.0}
+		};
+		this.setGrid(grid);
 	}
 
 	@Override
@@ -40,6 +50,10 @@ public class Queen extends Pieces {
 			dirX += 1;
 		}
 		return possiblemoves;
+	}
+
+	public Pieces clone() {
+		return new Queen(this.getPosX(), this.getPosY(), this.getOwner());
 	}
 
 }

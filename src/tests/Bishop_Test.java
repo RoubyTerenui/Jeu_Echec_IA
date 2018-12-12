@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import environment.Environment;
-import junit.framework.Assert;
+//import junit.framework.Assert;
 import pieces.Bishop;
 
 class Bishop_Test {
