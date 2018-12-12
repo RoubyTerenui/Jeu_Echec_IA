@@ -12,6 +12,17 @@ public class King extends Pieces {
 	// --- CONSTRUCTOR ---
 	public King(int posX, int posY, Boolean owner) {
 		super(posX, posY, owner, 1000);
+		double[][] grid = {
+				{-3.0,	-4.0,   -4.0,	-5.0,	-5.0,	-4.0,	-4.0,	-3.0},
+				{-3.0,	-4.0,	-4.0,	-5.0,	-5.0,	-4.0,	-4.0,	-3.0},
+				{-3.0,	-4.0,	-4.0,	-5.0,	-5.0,	-4.0,	-4.0,	-3.0},
+				{-3.0,	-4.0,	-4.0,	-5.0,	-5.0,	-4.0,	-4.0,	-3.0},
+				{-2.0,	-3.0,	-3.0,	-4.0,	-4.0,	-3.0,	-3.0,	-2.0},
+				{-1.0,	-2.0,	-2.0,	-2.0, 	-2.0,	-2.0,	-2.0,	-1.0},
+				{2.0,	2.0,	 0.0,	 0.0,	 0.0,	 0.0, 	 2.0, 	 2.0},
+				{2.0,	3.0,	 1.0,	 0.0,	 0.0,	 1.0, 	 3.0, 	 2.0}
+				};
+		this.setGrid(grid);
 		setUnmoved(true);
 	}
 
@@ -60,11 +71,11 @@ public class King extends Pieces {
 		return possiblemoves;
 	}
 
-<<<<<<< Updated upstream
+
 	public Pieces clone() {
 		return new King(this.getPosX(), this.getPosY(), this.getOwner());
 	}
-=======
+
 	// TO DO Voir avec Kevin
 	public List<int[]> roqueLegal(Case[][] chessBoard) {
 		List<int[]> possiblemoves = new ArrayList<int[]>();
@@ -110,5 +121,4 @@ public class King extends Pieces {
 		return possiblemoves;
 	}
 
->>>>>>> Stashed changes
 }

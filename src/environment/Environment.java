@@ -16,7 +16,7 @@ public class Environment implements Runnable {
 	// permet de savoir si le jeu est terminï¿½ ou est encore en cours
 	boolean environmentRunning;
 	// TO DO historique des mouvements (egalité trois mouvements égaux)
-	
+	// TO DO gerer La position de l'echiquier en fonction de la couleur
 	// --- CONSTRUCTOR ---
 
 	public Environment() {
@@ -26,22 +26,18 @@ public class Environment implements Runnable {
 			for (int j = 0; j < 8; j++) {
 				this.chessBoard[i][j] = new Case(i,j,null);
 				if ( i == 7 ) {
-					// false pour les blancs
 					initializeMainPieces(false, i , j);
 				}
 				else {
 					if ( i == 6 ) {
-						// false pour les blancs
 						this.chessBoard[i][j].setActualPieces(new Pawn(i,j,false));
 					}
 					else {
 						if (i==0) {
-							// true pour les noirs
 							initializeMainPieces(true, i , j);
 						}
 						else {
 							if ( i == 1 ) {
-								// false pour les blancs
 								this.chessBoard[i][j].setActualPieces(new Pawn(i,j,true));
 							}
 						}
