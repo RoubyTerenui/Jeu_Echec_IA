@@ -13,6 +13,17 @@ public class Rook extends Pieces {
 	// --- CONSTRUCTOR ---
 	public Rook(int posX, int posY, Boolean owner) {
 		super(posX, posY, owner, 5);
+		double[][] grid={
+		{ 0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	 0.0},
+		{ 0.5,	1.0,	1.0,	1.0,	1.0,	1.0,	1.0,	 0.5},
+		{-0.5,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	-0.5},
+		{-0.5,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	-0.5},
+		{-0.5,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	-0.5},
+		{-0.5,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	-0.5},
+		{-0.5,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	-0.5},
+		{ 0.0,	0.0,	0.0,	0.5,	0.5,	0.0,	0.0,	 0.0}
+		};
+		this.setGrid(grid);
 		unmoved=true;
 	}
 
@@ -21,12 +32,10 @@ public class Rook extends Pieces {
 		return unmoved;
 	}
 
-	
 	// --- SETTER ---
 	public void setUnmoved(Boolean unmoved) {
 		this.unmoved = unmoved;
 	}
-	
 
 	// ---OTHER METHOD ---
 	@Override
@@ -83,6 +92,13 @@ public class Rook extends Pieces {
 				}
 			}
 		}
+		if (chessBoard[destPosX][destPosY].getActualPieces() != null) {
+			if (chessBoard[destPosX][destPosY].getActualPieces().getOwner() != this.getOwner()) {
+				if (chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
+					chessBoard[destPosX][destPosY].getActualPieces().setEndangeredPieces(true);
+				}
+			}
+		}
 		return true;
 	}
 
@@ -111,8 +127,6 @@ public class Rook extends Pieces {
 		}
 		return possiblemoves;
 	}
-	
-
 
 	public Pieces clone() {
 		return new Rook(this.getPosX(), this.getPosY(), this.getOwner());
