@@ -2,11 +2,19 @@ package uci;
 
 import java.util.*;
 
+import agent.Agent;
+import environment.Environment;
+import environment.Move;
+
 public class uci {
 
     static String engineName = "On va vous cogner sec v1";
+    static Agent agent;
+    static Environment environment;
 
     public static void uciCom(){
+    	agent=new Agent();
+    	environment=new Environment();
         Scanner input = new Scanner(System.in);
         while(true){
             String inputString = input.nextLine();
@@ -23,7 +31,7 @@ public class uci {
             }
             else if (inputString.startsWith("go"))
             {
-                inputGo(2,1,3,1);
+                inputGo();
             }
             else if (inputString.equals("quit"))
             {
@@ -61,6 +69,8 @@ public class uci {
         if(BlackList.length / 2 != 0){
             blackPlayler = false;
         }
+        int[] result = {transformColToPos(input.charAt(0)),(int)input.charAt(1),transformColToPos(input.charAt(3)),(int)input.charAt(4)};
+        executeAction(environment, transformColToPos(input.charAt(0)),(int)input.charAt(1),transformColToPos(input.charAt(3)),(int)input.charAt(4));
     }
 
     private static String transformPosToCol(int positionCol){
@@ -91,16 +101,17 @@ public class uci {
         return 0;
     }
 
-    private static void inputGo(int positionDepX, int positionDepY, int positionX, int positionY){
-        System.out.println("bestmove " + transformPosToCol(positionDepY) + positionDepX + transformPosToCol(positionY) + positionX);
+    private static void inputGo(){
+    	agent.observ(environment.getChessBoard());
+    	Move move=agent.getBestMove(2);
+    	executeAction(environment,move.getPiece().getPosX(),move.getPiece().getPosY(),move.getDest()[0],move.getDest()[1]);
+        System.out.println("bestmove " + transformPosToCol(move.getPiece().getPosX())+ move.getPiece().getPosY()+transformPosToCol(move.getDest()[0])+move.getDest()[1]);
     }
 
-    private static String getTimer(String inputString){
-        String output = "";
-        int size = inputString.length();
-        if(inputString.contains("go ")){
-            output = inputString.substring(size - 2, 3);
-        }
-        return output;
+    private static void inputPrint(){}
+
+    private static void executeAction(Environment environment,int positionDepartX , int positionDepartY , int positionDestX, int positionDestY) {
+    	environment.getChessBoard()[positionDestX][positionDestY].setActualPieces(environment.getChessBoard()[positionDepartX][positionDepartY].getActualPieces());
+    	environment.getChessBoard()[positionDestX][positionDestY].setActualPieces(null);
     }
 }

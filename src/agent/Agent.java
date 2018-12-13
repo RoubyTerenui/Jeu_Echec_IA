@@ -138,8 +138,7 @@ public class Agent {
 		return moves.get((int) (Math.random() * (moves.size() + 1)));
 	}
 
-	public Move getBestMove() {
-		int minimax_depth = 2;
+	public Move getBestMove(int minimax_depth) {
 		Move bestMove = null;
 		int bestVal = Integer.MIN_VALUE;
 
