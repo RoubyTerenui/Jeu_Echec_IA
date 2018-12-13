@@ -74,7 +74,7 @@ public class Agent {
 					// l'adversaire
 					boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
 							*  ((int)2*board[i][j].getActualPieces().getGrid()[i][j]);
-					// Réduire le nombre de piece en danger
+					// Reduire le nombre de piece en danger
 					boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
 							* (board[i][j].getActualPieces().isEndangeredPieces() == true ? -1 : 1);
 					// Favoriser le centre pour les pions centraux
