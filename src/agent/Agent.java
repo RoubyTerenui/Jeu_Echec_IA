@@ -53,6 +53,11 @@ public class Agent {
 					moves.add(new Move(piece, dest));
 				}
 			}
+			else if (piece.getClass().equals(King.class)) {
+				for (int[] dest : ((King) piece).roqueLegal(board)) {
+					moves.add(new Move(piece, dest));
+				}
+			}
 		}
 
 		return moves;
@@ -190,6 +195,21 @@ public class Agent {
 			{
 				((Pawn) m.getPiece()).setCanBepassTaken(true);
 			}
+		}
+		else if (m.getPiece().getClass().equals(King.class)) {
+			((King) newBoard[m.getPiece().getPosX()][m.getPiece().getPosY()].getActualPieces()).setUnmoved(false);
+			if (Math.abs(m.getPiece().getPosY() - m.getDest()[1]) > 1) {
+				System.out.println("Roque : " + m);
+				if (m.getDest()[1] == 6) {
+					newBoard[m.getPiece().getPosX()][7].movePieceTo(newBoard[m.getPiece().getPosX()][5]);
+				}
+				else if (m.getDest()[1] == 2) {
+					newBoard[m.getPiece().getPosX()][0].movePieceTo(newBoard[m.getPiece().getPosX()][3]);
+				}
+			}
+		}
+		else if (m.getPiece().getClass().equals(Rook.class)) {
+			((Rook) newBoard[m.getPiece().getPosX()][m.getPiece().getPosY()].getActualPieces()).setUnmoved(false);
 		}
 
 		// debugBoard(board);
