@@ -2,6 +2,7 @@ package main;
 
 import agent.Agent;
 import environment.Environment;
+import uci.uci;
 
 public class Main {
 
@@ -9,8 +10,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		Environment environment = new Environment();
 		Agent agent = new Agent();
-		agent.observ(environment.getChessBoard());
-		System.out.println(agent.getBestMove());
+		uci ucinew=new uci();
 
 	}
 
