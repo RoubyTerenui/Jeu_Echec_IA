@@ -47,6 +47,12 @@ public class Agent {
 				moves.add(m);
 				// System.out.println(m);
 			}
+			if (piece.getClass().equals(Pawn.class))
+			{
+				for (int[] dest : ((Pawn) piece).passTakenMove(board)) {
+					moves.add(new Move(piece, dest));
+				}
+			}
 		}
 
 		return moves;
@@ -164,6 +170,25 @@ public class Agent {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				newBoard[i][j] = new Case(board[i][j]);
+				if (newBoard[i][j].getActualPieces() != null && newBoard[i][j].getActualPieces().getClass().equals(Pawn.class) &&
+						(((Pawn) newBoard[i][j].getActualPieces()).isCanBepassTaken()))
+				{
+					((Pawn) newBoard[i][j].getActualPieces()).setCanBepassTaken(false);
+				}
+			}
+		}
+
+		if (m.getPiece().getClass().equals(Pawn.class))
+		{
+			if (Math.abs(m.getPiece().getPosX() - m.getDest()[0]) == 1 && Math.abs(m.getPiece().getPosY() - m.getDest()[1]) == 1) {
+				Pieces adjacent = board[m.getPiece().getPosX()][m.getDest()[1]].getActualPieces(); // use old board because CanBePassTaken is cleared during init
+				if (adjacent != null && adjacent.getClass().equals(Pawn.class) && ((Pawn)adjacent).isCanBepassTaken()) {
+					newBoard[adjacent.getPosX()][adjacent.getPosX()].setActualPieces(null);
+				}
+			}
+			else if (Math.abs(m.getPiece().getPosX() - m.getDest()[0]) == 2)
+			{
+				((Pawn) m.getPiece()).setCanBepassTaken(true);
 			}
 		}
 

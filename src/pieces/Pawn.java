@@ -187,21 +187,29 @@ public class Pawn extends Pieces {
 	// verifier son efficacit�
 	public List<int[]> passTakenMove(Case[][] chessBoard) {
 		List<int[]> possiblemoves = new ArrayList<int[]>();
-		Pieces adjacent = chessBoard[this.getPosX()][this.getPosY() - 1].getActualPieces();
-		if (adjacent.getClass().equals(Pawn.class)) {
-			if (adjacent.getOwner() != this.getOwner()) {
-				if (((Pawn) adjacent).isCanBepassTaken()) {
-					int[] newMove = { this.getPosX(), this.getPosY() - 1 };
-					possiblemoves.add(newMove);
+		Pieces adjacent;
+
+		if (this.getPosY() > 0) {
+			adjacent = chessBoard[this.getPosX()][this.getPosY() - 1].getActualPieces();
+			if (adjacent != null && adjacent.getClass().equals(Pawn.class)) {
+				if (adjacent.getOwner() != this.getOwner()) {
+					if (((Pawn) adjacent).isCanBepassTaken()) {
+						int[] newMove = { this.getPosX(), this.getPosY() - 1 };
+						possiblemoves.add(newMove);
+					}
 				}
 			}
 		}
-		adjacent = chessBoard[this.getPosX()][this.getPosY() + 1].getActualPieces();
-		if (adjacent.getClass().equals(Pawn.class)) {
-			if (adjacent.getOwner() != this.getOwner()) {
-				if (((Pawn) adjacent).isCanBepassTaken()) {
-					int[] newMove = { this.getPosX(), this.getPosY() + 1 };
-					possiblemoves.add(newMove);
+
+		if (this.getPosY() < 7)
+		{
+			adjacent = chessBoard[this.getPosX()][this.getPosY() + 1].getActualPieces();
+			if (adjacent != null && adjacent.getClass().equals(Pawn.class)) {
+				if (adjacent.getOwner() != this.getOwner()) {
+					if (((Pawn) adjacent).isCanBepassTaken()) {
+						int[] newMove = { this.getPosX(), this.getPosY() + 1 };
+						possiblemoves.add(newMove);
+					}
 				}
 			}
 		}
