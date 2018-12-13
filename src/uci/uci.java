@@ -13,17 +13,9 @@ public class uci {
             if("uci".equals(inputString)){
                 inputUCI();
             }
-            else if (inputString.startsWith("setoption"))
-            {
-                inputSetOption(inputString);
-            }
             else if ("isready".equals(inputString))
             {
                 inputIsReady();
-            }
-            else if ("ucinewgame".equals(inputString))
-            {
-                inputUCINewGame();
             }
             else if (inputString.startsWith("position"))
             {
@@ -37,10 +29,6 @@ public class uci {
             {
                 inputQuit();
             }
-            else if ("print".equals(inputString))
-            {
-                inputPrint();
-            }
         }
     }
 
@@ -52,14 +40,6 @@ public class uci {
         System.out.println("uciok");
     }
 
-    private static void inputSetOption(String inputString){
-        //TO DO setOption
-    }
-
-    private static void inputUCINewGame(){
-
-    }
-
     private static void inputIsReady(){
         System.out.println("isready");
     }
@@ -68,16 +48,19 @@ public class uci {
         System.exit(0);
     }
 
-    private static int[] inputPosition(String inputString){
-        String input = "";
+    private static void inputPosition(String inputString){
+        String output = "";
+        Boolean blackPlayler = true;
         int size = inputString.length();
         if(inputString.contains("startpos ")){
             if(inputString.contains("moves ")){
-                input = inputString.substring(size - 2, size);
+                output = inputString.substring(size - 4, size);
             }
         }
-        int[] result = {transformColToPos(input.charAt(0)),(int)input.charAt(1)};
-        return result;
+        String[] BlackList = output.split(" ");
+        if(BlackList.length / 2 != 0){
+            blackPlayler = false;
+        }
     }
 
     private static String transformPosToCol(int positionCol){
@@ -112,6 +95,12 @@ public class uci {
         System.out.println("bestmove " + transformPosToCol(positionDepY) + positionDepX + transformPosToCol(positionY) + positionX);
     }
 
-    private static void inputPrint(){}
-
+    private static String getTimer(String inputString){
+        String output = "";
+        int size = inputString.length();
+        if(inputString.contains("go ")){
+            output = inputString.substring(size - 2, 3);
+        }
+        return output;
+    }
 }
