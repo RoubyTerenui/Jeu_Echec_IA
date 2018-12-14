@@ -16,6 +16,13 @@ public class Agent {
 	private Case[][] belief;
 	private Boolean aiOwner = true; // TODO: decide true or false
 
+	
+	public void setAiOwner(Boolean aiOwner) {
+		this.aiOwner = aiOwner;
+	}
+	public Boolean getAiOwner() {
+		return(this.aiOwner);
+	}
 	public Agent() {
 		this.belief = null;
 	}
@@ -38,10 +45,11 @@ public class Agent {
 		return pieces;
 	}
 
-	private List<Move> getPossibleMoves(Case[][] board, Boolean player) {
+	public List<Move> getPossibleMoves(Case[][] board, Boolean player) {
 		List<Move> moves = new ArrayList<Move>();
 
 		for (Pieces piece : getPiecesForOwner(board, player)) {
+                    
 			for (int[] dest : piece.possibleMoves(board)) {
 				Move m = new Move(piece, dest);
 				moves.add(m);
@@ -65,41 +73,49 @@ public class Agent {
 					// Maximise le nombre de coups possible / Minimise le nombre de coup pour
 					// l'adversaire
 					boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
-							* board[i][j].getActualPieces().possibleMoves(board).size();
+							* 2*board[i][j].getActualPieces().possibleMoves(board).size();
 					// Maximise la valeur des pieces pour l'owner et minimiser la valeur pour
 					// l'adversaire
 					boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
-							* board[i][j].getActualPieces().getValue();
+							* 2*board[i][j].getActualPieces().getValue();
 					// Choisir les meilleurs positions des pieces pour l'owner et minimiser la valeur pour
 					// l'adversaire
 					boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
 							*  ((int)2*board[i][j].getActualPieces().getGrid()[i][j]);
 					// Reduire le nombre de piece en danger
 					boardScore += (board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
-							* (board[i][j].getActualPieces().isEndangeredPieces() == true ? -1 : 1);
+							* 2*(board[i][j].getActualPieces().isEndangeredPieces() == true ? -1 : 1);
+                                        if(board[i][j].getActualPieces().getClass()==King.class){
+                                            boardScore +=(board[i][j].getActualPieces().getOwner() == aiOwner ? 1 : -1)
+							* 100000*(board[i][j].getActualPieces().isEndangeredPieces() == true ? -1 : 1);
+                                        }
 					// Favoriser le centre pour les pions centraux
 					if (this.aiOwner) {
 						if (board[3][3].getActualPieces() != null) {
 							if (board[3][3].getActualPieces().getClass() == Pawn.class) {
 								boardScore++;
+                                                                boardScore++;
 
 							}
 						}
 						if (board[4][3].getActualPieces() != null) {
 							if (board[4][3].getActualPieces().getClass() == Pawn.class) {
 								boardScore++;
+                                                                boardScore++;
 							}
 						}
 					} else {
 						if (board[3][4].getActualPieces() != null) {
 							if (board[3][4].getActualPieces().getClass() == Pawn.class) {
 								boardScore++;
+                                                                boardScore++;
 
 							}
 						}
 						if (board[4][4].getActualPieces() != null) {
 							if (board[4][4].getActualPieces().getClass() == Pawn.class) {
 								boardScore++;
+                                                                boardScore++;
 							}
 						}
 					}
@@ -108,7 +124,7 @@ public class Agent {
 			}
 			// Faciliter le petit roque et le rendre plus difficile pour l'adversaire
 			if (i % 7 == 0) {
-				System.out.println(i);
+				//System.out.println(i);
 				if (board[i][7].getActualPieces() != null && board[i][4].getActualPieces() != null) {
 					if (board[i][7].getActualPieces().getClass() == Rook.class
 							&& board[i][4].getActualPieces().getClass() == King.class) {
@@ -143,12 +159,12 @@ public class Agent {
 		int bestVal = Integer.MIN_VALUE;
 
 		for (Move move : getPossibleMoves(this.belief, this.aiOwner)) {
-			System.out.println(move);
+			//System.out.println(move);
 
 			int moveVal = minimaxAlphaBeta(fakeMove(this.belief, move), minimax_depth, aiOwner, Integer.MIN_VALUE,
 					Integer.MAX_VALUE);
 
-			System.out.println("Value : " + moveVal);
+                        System.out.println("info  Value : " + moveVal );
 
 			if (moveVal > bestVal) {
 				bestVal = moveVal;
@@ -158,21 +174,24 @@ public class Agent {
 		return bestMove;
 	}
 
-	private Case[][] fakeMove(Case[][] board, Move m) {
+	public Case[][] fakeMove(Case[][] board, Move m) {
 		Case[][] newBoard = new Case[8][8];
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				newBoard[i][j] = new Case(board[i][j]);
+                                if (newBoard[i][j].getActualPieces() != null)
+                                    newBoard[i][j].setEndangered(false);
 			}
 		}
 
-		// debugBoard(board);
-		// System.out.println(m.getPiece());
-		// System.out.println(m.getPiece().getPosX() + " " + m.getPiece().getPosY());
+		//debugBoard(board);
+		//System.out.println(m.getPiece());
+		//System.out.println("info fakeMove"+m.getPiece().getPosX() + " " + m.getPiece().getPosY());
 
 		newBoard[m.getPiece().getPosX()][m.getPiece().getPosY()].movePieceTo(newBoard[m.getDest()[0]][m.getDest()[1]]);
-
+                
+                
 		return newBoard;
 	}
 
@@ -219,7 +238,7 @@ public class Agent {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			
+			this.run();
 		}
 
 	}

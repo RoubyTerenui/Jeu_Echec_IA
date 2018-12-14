@@ -148,12 +148,15 @@ public class Pawn extends Pieces {
 		if (chessBoard[destPosX][destPosY].getActualPieces() != null) {
 			if (chessBoard[destPosX][destPosY].getActualPieces().getOwner() != this.getOwner()) {
 				if (Math.abs(destPosY - this.getPosY()) == 1) {
-					if (chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
+					if (!chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
 						chessBoard[destPosX][destPosY].getActualPieces().setEndangeredPieces(true);
 					}
 				}
 			}
 		}
+                if (Math.abs(destPosY - this.getPosY()) == 1) {
+                    chessBoard[destPosX][destPosY].setEndangered(true);
+                }
 		return true;
 	}
 

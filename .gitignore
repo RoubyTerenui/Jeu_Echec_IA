@@ -6,3 +6,6 @@ Chess IA.iml
 out/
 
 src/tests/Bishop_Test\.java
+/nbproject/private/
+/build/
+/dist/

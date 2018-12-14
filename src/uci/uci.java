@@ -5,16 +5,22 @@ import java.util.*;
 import agent.Agent;
 import environment.Environment;
 import environment.Move;
+import pieces.Pawn;
 
 public class uci {
 
-    static String engineName = "On va vous cogner sec v1";
+    static String engineName = "ProjectEquipeValTer";
     static Agent agent;
     static Environment environment;
 
+    public uci() {
+    	super();
+
+    }
     public static void uciCom(){
-    	agent=new Agent();
+        agent=new Agent();
     	environment=new Environment();
+    	agent.observ(environment.getChessBoard());
         Scanner input = new Scanner(System.in);
         while(true){
             String inputString = input.nextLine();
@@ -58,19 +64,28 @@ public class uci {
 
     private static void inputPosition(String inputString){
         String output = "";
-        Boolean blackPlayler = true;
+        Boolean blackPlayer = true;
         int size = inputString.length();
         if(inputString.contains("startpos ")){
             if(inputString.contains("moves ")){
+                System.out.println(size);
                 output = inputString.substring(size - 4, size);
+                System.out.println(output);
+                String[] BlackList = output.split(" ");
+                 System.out.println(BlackList.length);
+                if(BlackList.length % 2 != 0){
+                    blackPlayer = false;
+                    agent.setAiOwner( blackPlayer );
+                   
+                }
+
+                int[] result = {transformColToPos(output.charAt(0)),Character.getNumericValue(output.charAt(1)),transformColToPos(output.charAt(2)),Character.getNumericValue(output.charAt(3))};
+                System.out.println(result[0]+" "+result[1]+ " "+ result[2]+ " "+result[3]);
+                executeAction(environment, result[1]-1,result[0]-1,result[3]-1,result[2]-1);
+                agent.observ(environment.getChessBoard());
+        
             }
-        }
-        String[] BlackList = output.split(" ");
-        if(BlackList.length / 2 != 0){
-            blackPlayler = false;
-        }
-        int[] result = {transformColToPos(input.charAt(0)),(int)input.charAt(1),transformColToPos(input.charAt(3)),(int)input.charAt(4)};
-        executeAction(environment, transformColToPos(input.charAt(0)),(int)input.charAt(1),transformColToPos(input.charAt(3)),(int)input.charAt(4));
+        }       
     }
 
     private static String transformPosToCol(int positionCol){
@@ -102,16 +117,30 @@ public class uci {
     }
 
     private static void inputGo(){
-    	agent.observ(environment.getChessBoard());
-    	Move move=agent.getBestMove(2);
+        System.out.println("info inputGOFunction");
+        Move move;        
+        if(agent.getPossibleMoves(environment.getChessBoard(),agent.getAiOwner()).size()<10){
+            move=agent.getBestMove(4);
+        }
+        else{
+            move=agent.getBestMove(2);
+        }
+        int originX=move.getPiece().getPosX()+1;
+        int destX=move.getDest()[0]+1 ;
+        System.out.println("bestmove " +transformPosToCol(move.getPiece().getPosY()+1)+ originX + transformPosToCol(move.getDest()[1]+1)+destX);
     	executeAction(environment,move.getPiece().getPosX(),move.getPiece().getPosY(),move.getDest()[0],move.getDest()[1]);
-        System.out.println("bestmove " + transformPosToCol(move.getPiece().getPosX())+ move.getPiece().getPosY()+transformPosToCol(move.getDest()[0])+move.getDest()[1]);
+        agent.observ(environment.getChessBoard());
     }
 
     private static void inputPrint(){}
 
     private static void executeAction(Environment environment,int positionDepartX , int positionDepartY , int positionDestX, int positionDestY) {
-    	environment.getChessBoard()[positionDestX][positionDestY].setActualPieces(environment.getChessBoard()[positionDepartX][positionDepartY].getActualPieces());
-    	environment.getChessBoard()[positionDestX][positionDestY].setActualPieces(null);
+        int[] dest={positionDestX,positionDestY};
+        Move move=new Move(environment.getChessBoard()[positionDepartX][positionDepartY].getActualPieces(),dest);
+        if(move.getPiece().getClass()== Pawn.class){
+            ((Pawn)environment.getChessBoard()[positionDepartX][positionDepartY].getActualPieces()).setInitialPosition(false);
+            ((Pawn) move.getPiece()).setInitialPosition(false);
+        }
+        environment.setChessBoard(agent.fakeMove(environment.getChessBoard(), move));
     }
 }

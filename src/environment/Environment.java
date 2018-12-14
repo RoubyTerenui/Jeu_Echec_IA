@@ -13,9 +13,9 @@ public class Environment implements Runnable {
 	
 	Case[][] chessBoard;
 	int mesureDePerformance;
-	// permet de savoir si le jeu est terminï¿½ ou est encore en cours
+	// permet de savoir si le jeu est termine ou est encore en cours
 	boolean environmentRunning;
-	// TO DO historique des mouvements (egalité trois mouvements égaux)
+	// TO DO historique des mouvements (egalite trois mouvements ï¿½gaux)
 	// TO DO gerer La position de l'echiquier en fonction de la couleur
 	// --- CONSTRUCTOR ---
 

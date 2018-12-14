@@ -40,11 +40,11 @@ public class Rook extends Pieces {
 	// ---OTHER METHOD ---
 	@Override
 	public Boolean isMoveLegal(int destPosX, int destPosY, Case[][] chessBoard) {
-		// Si en-dehors de l'echiquier illégal
+		// Si en-dehors de l'echiquier illegal
 		if (destPosX < 0 || destPosY < 0 || destPosX > 7 || destPosY > 7) {
 			return false;
 		} else {
-			// Si le mouvement n'est pas diagonal illégal
+			// Si le mouvement n'est pas diagonal illegal
 			if (Math.abs(destPosX - this.getPosX()) != 0 && Math.abs(destPosY - this.getPosY()) != 0) {
 				return false;
 			} else {
@@ -94,11 +94,12 @@ public class Rook extends Pieces {
 		}
 		if (chessBoard[destPosX][destPosY].getActualPieces() != null) {
 			if (chessBoard[destPosX][destPosY].getActualPieces().getOwner() != this.getOwner()) {
-				if (chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
+				if (!chessBoard[destPosX][destPosY].getActualPieces().isEndangeredPieces()) {
 					chessBoard[destPosX][destPosY].getActualPieces().setEndangeredPieces(true);
 				}
 			}
 		}
+                chessBoard[destPosX][destPosY].setEndangered(true);
 		return true;
 	}
 

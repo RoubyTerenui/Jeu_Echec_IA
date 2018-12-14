@@ -41,7 +41,7 @@ public class King extends Pieces {
 	public Boolean isMoveLegal(int destPosX, int destPosY, Case[][] chessBoard) {
 		Bishop dummy = new Bishop(this.getPosX(), this.getPosY(), this.getOwner());
 		Rook dummy2 = new Rook(this.getPosX(), this.getPosY(), this.getOwner());
-		if (Math.abs(this.getPosX() - destPosX) > 1 || Math.abs(this.getPosX() - destPosX) > 1) {
+		if (Math.abs(this.getPosX() - destPosX) > 1 || Math.abs(this.getPosY() - destPosY) > 1) {
 			return false;
 		} else {
 			if (!dummy.isMoveLegal(destPosX, destPosY, chessBoard)
@@ -49,6 +49,9 @@ public class King extends Pieces {
 				return false;
 			}
 		}
+                if(chessBoard[destPosX][destPosY].getEndangerd()){
+                    return false;
+                }
 		return true;
 	}
 
