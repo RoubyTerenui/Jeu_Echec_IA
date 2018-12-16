@@ -49,6 +49,9 @@ public class King extends Pieces {
 				return false;
 			}
 		}
+                if(chessBoard[destPosX][destPosY].getEndangerd()){
+                    return false;
+                }
 		return true;
 	}
 

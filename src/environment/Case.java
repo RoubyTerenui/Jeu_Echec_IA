@@ -1,6 +1,6 @@
 package environment;
 
-import com.sun.istack.internal.Nullable;
+//import com.sun.istack.internal.Nullable;
 import pieces.Pieces;
 
 public class Case {
@@ -9,12 +9,13 @@ public class Case {
 
 	private int positionY;
 	private int positionX;
-	@Nullable
+	//@Nullable
 	private Pieces actualPieces;
+        boolean endangered;
 
 	// --- CONSTRUCTOR ---
 
-	public Case(int positionX, int positionY, @Nullable Pieces actualPieces) {
+	public Case(int positionX, int positionY,/* @Nullable*/ Pieces actualPieces) {
 		super();
 		this.positionY = positionY;
 		this.positionX = positionX;
@@ -41,6 +42,9 @@ public class Case {
 	public Pieces getActualPieces() {
 		return actualPieces;
 	}
+        public Boolean getEndangerd(){
+            return this.endangered;
+        }
 
 	// --- SETTERS ---
 	public void setPositionX(int positionX) {
@@ -63,5 +67,7 @@ public class Case {
 		dest.setActualPieces(this.getActualPieces());
 		this.actualPieces = null;
 	}
-
+        public void setEndangered(Boolean danger){
+            this.endangered=danger;
+        }
 }
